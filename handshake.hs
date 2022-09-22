@@ -1,6 +1,3 @@
-import Distribution.Utils.MD5 (binaryGetMD5)
-
-
 handshake :: Int -> [String]
 handshake 0 = []
 handshake n = if length bin > 4 && bin !! 4 == 1 then reverse (helper bin 0) else helper bin 0
