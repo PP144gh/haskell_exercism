@@ -1,3 +1,4 @@
+import Distribution.Utils.MD5 (binaryGetMD5)
 
 
 handshake :: Int -> [String]
@@ -8,9 +9,9 @@ handshake n = if length bin > 4 && bin !! 4 == 1 then reverse (helper bin 0) els
 
 
 helper :: [Int] -> Int -> [String]
---helper bin len = reverse (helper bin (len-1))
 helper [] _ =[]
 helper bin k 
+    | k > 4 = helper [] 0 -- stop after the fifth digit (fifth because it started from 0), as it will not change the return
     | last bin == 1 = if k==0 then "wink":helper (init bin) (k+1) else
         if k==1 then "double blink":helper (init bin) (k+1) else
             if k==2 then "close your eyes":helper (init bin) (k+1) else
@@ -29,6 +30,27 @@ toBinary n
 -- divide (integer division) the number by 2 and add 0 every time the result is even and one every time the result is odd
 
 
+
+-- very ingenious way of doing this without converting the number to binary
+
+{-
+handshakeAcc :: [String] -> Int -> [String]
+handshakeAcc acc i
+    | n >= 16 = reverse (handshakeAcc acc (n-16))
+    | n >= 8 = handshakeAcc ("jump":acc) (n-8)
+    | n >= 4 = handshakeAcc ("close your eyes":acc) (n-4)
+    | n >= 2 = handshakeAcc ("double blink":acc) (n-2)
+    | n == 1 = handshakeAcc ("wink":acc) (n-1)
+    | n == 0 = acc
+    where n = i `mod` 32
+
+ -- this mod 32 has the same effect as my k> 4 = helper [] 0. stops doing more things than necessary. rest is the same idea but without thinking in binary and using the exponent k of 2^k
+
+handshake :: Int -> [String]
+handshake = handshakeAcc []
+
+-}
+
 main :: IO ()
 main = do
 {- comentario multiline
@@ -40,7 +62,7 @@ main = do
 -- ctr + S to save in VS 
 
 
-let n=31
+let n=1023
 let bin = toBinary n
 let len = length bin
 print(bin)
