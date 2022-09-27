@@ -44,6 +44,8 @@ responseFor xs
     | otherwise = "Whatever."
 
 
+-- or
+{-
     import           Data.Char
 responseFor :: String -> String
 responseFor input
@@ -57,5 +59,5 @@ responseFor input
     letters = filter isLetter text
     isShouting = all isUpper letters && any isUpper letters
     isAsking = last text == '?'
-
+-}
 -------------------
