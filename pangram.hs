@@ -1,3 +1,5 @@
+import Data.Char (toUpper)
+
 -- PANGRAM --
 -- checks if the string contains the letter 'letter'. If yes, returns True.
 searcher :: String -> Char -> Bool
@@ -23,7 +25,9 @@ isPangram text
 
 
 
+-- OR
 
+{-
 
 import Data.Char (toLower)
 lowercaseLetters :: String
@@ -38,5 +42,7 @@ isPangram text = all (`elem` map toLower text) lowercaseLetters
 --all (`elem` map toLower text) lowercaseLetters = all (`elem` lt) lowercaseLetters 
 --example of partial application and currying. still dont get it completely.
 --for every letter of lowercaseLetters, el, it does el `elem` lt, this is True if the letter el is in lt. all does a concatenation of all these conditions and returns true when all are true.
+
+    -}
 
 ---------------

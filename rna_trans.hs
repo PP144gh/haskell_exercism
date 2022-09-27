@@ -21,7 +21,9 @@ toRNA xs = if filter (\x -> x/='G' && x/='C' && x/='T' && x/='A') xs == ""
            else Left inval
            where inval = head (filter (\x -> x/='G' && x/='C' && x/='T' && x/='A') xs)
            --the conditions in filter are an example of a lambda function    
+--OR
 
+{-
 toRNA :: String -> String
 toRNA "" = ""
 toRNA ('G':xs) = 'C':toRNA xs
@@ -30,7 +32,10 @@ toRNA ('T':xs) = 'A':toRNA xs
 toRNA ('A':xs) = 'U':toRNA xs
 toRNA (x:xs) = x:toRNA xs    
 
+-}
+-- OR
 
+{-
 toRNA :: String -> Either Char String
 toRNA = traverse fromDNA
   where
@@ -40,5 +45,7 @@ toRNA = traverse fromDNA
     fromDNA 'T' = pure 'A'
     fromDNA 'A' = pure 'U'
     fromDNA c = Left c
+
+    -}
 ------------------------
 

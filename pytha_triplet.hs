@@ -36,8 +36,8 @@ search as  sumbc = list3 ++ search (as-1) (sumbc+1)
 -- Its way faster if I understand by hand what are the possible limits for a b c that have a+b+c=n such that a<b<c and only search in that subset, applying logic to find out which ones
 -- have a**2 + b**2 = c**2
 
-Or more compact version
-
+--Or more compact version
+{-
 tripletsWithSum :: Int -> [(Int,Int,Int)]
 tripletsWithSum n =
     filter (\(a,b,c) -> a*a+b*b == c*c)
@@ -52,5 +52,6 @@ triplets n = [
     , c <- [n-a-b]
   ]
 
+-}
   ------------------------------------------------------------------
 
