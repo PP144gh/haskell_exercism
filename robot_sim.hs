@@ -1,4 +1,8 @@
-{-# LANGUAGE BlockArguments #-}
+{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+{-# HLINT ignore "Use bimap" #-}
+
+import Data.List ( elemIndex ) 
+import Data.Maybe ( fromMaybe )
 
 data Bearing = North
              | East
@@ -10,7 +14,7 @@ data Bearing = North
 -- data is like a class and inside it are "objects", that why North, East etc are called constructors.
 
 
-type Pos = (Integer,Integer)
+type Pos = (Integer,Integer) 
 
 
 -- class robot with object mkrobot with properties Bearing and Pos
@@ -29,34 +33,34 @@ mkRobot direction coordinates = MkRobot {dir = direction, coords = coordinates}
 bearing :: Robot -> Bearing
 bearing robot = dir robot
 
+coordinates :: Robot -> Pos
+coordinates robot = coords robot
 
 rotate :: Robot -> Char -> Bearing
 rotate robot char
-    | char == 'R' = head (filter (\x -> x /= bearing robot) rlist)
-    | char == 'L' = bearing robot
+    | char == 'R' = rlist !! (fromMaybe (-2) (elemIndex (bearing robot) rlist) +1) -- gives -2 if bearing robot is not in the list (which should be impossible)
+    | char == 'L' = llist !! (fromMaybe (-2) (elemIndex (bearing robot) llist) +1)
     | otherwise = bearing robot
     where rlist= cycle [North, East, South, West]
           llist = cycle [North, West, South, East]
 
- 
 
+go :: Robot -> Char -> Pos
+go robot char 
+    | char =='A' = if bearing robot == North then (fst (coordinates robot), snd (coordinates robot) + 1) else
+        if bearing robot == East then (fst (coordinates robot) + 1, snd (coordinates robot)) else
+            if bearing robot == South then (fst (coordinates robot), snd (coordinates robot) - 1) else
+                if bearing robot == West then (fst (coordinates robot) - 1, snd (coordinates robot)) else coordinates robot
+   -- | char == 'L' || char == 'R' = go (MkRobot {dir = rotate robot char, coords = coordinates robot }) 'A'   this line was for the case R meant rotating right and moving forward, for instance.
+    | otherwise = coordinates robot
 
-
-coordinates :: Robot -> Pos
-coordinates robot = coords robot
 
 
 
 move :: Robot -> String -> Robot
 move robot [] = robot
-move robot (i:instructions) 
-    | i =='R' && currentdir == North = move (MkRobot {dir = East, coords = currentcoords }) instructions
-    | otherwise = move robot instructions
-
-    where currentdir = bearing robot
-          currentcoords = coordinates robot
-
-
+--move robot (i:instructions) = move (MkRobot {dir = rotate robot i, coords = go robot i }) instructions
+move robot instructions = foldl (\ robot i -> MkRobot {dir = rotate robot i, coords = go robot i}) robot instructions -- same as above but using foldl
 
 
 main :: IO ()
@@ -72,11 +76,18 @@ main = do
 
 
 
-let dir = East
+let dir = North
 let pos =(7,3)
 let robot=mkRobot dir pos
+let instructions = "RAALAL"
+let rlist= cycle [North, East, South, West]
+
+
+--print(rlist)
+
 print(robot)
 print(bearing robot)
 print(coordinates robot)
-print(rotate robot 'R')
-print(move robot "R")
+print(move robot instructions)
+
+
