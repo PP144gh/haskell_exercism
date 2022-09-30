@@ -39,7 +39,9 @@ character = do
     return Character { strength = str, dexterity = dex, constitution = con, intelligence = int, wisdom = wis, charisma = char, hitpoints = hp }
   
 
-
+-- do notation used to perform a sequence of IO actions. action dice and store its result in variable d1: d1 <- dice
+--still not sure of what the bind operator (<-) means. In ability there is no type transformation from dice to d1, but in the main func there is a type transformation? This is connected to monads?
+-- COME BACK IN THE FUTURE. SEE PAGE 166 OF THE BOOK. this is a monad and the thing in main is a example of "interactive programming?" (see chap 10)
 
 dice :: Gen Int
 dice = choose (1, 6)
