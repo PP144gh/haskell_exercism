@@ -18,12 +18,14 @@ classify num
 
 
 aliquotsum :: Int -> Int
-aliquotsum num = sum (filter (0 /=) (drop 1 (unfoldr (\x -> if  x == 0 then Nothing else Just (f num x, x-1)) num)))
+aliquotsum num = sum (filter (0 /=) (tail (unfoldr (\x -> if  x == 0 then Nothing else Just (f num x, x-1)) num)))
                  where f num x = if num `mod` x == 0 then x else 0
   
+aliquotsum' :: Int -> Int
+aliquotsum' num = sum (tail (reverse ([x | x <- [1..num], num `mod` x == 0])))
 
-
-
+--another way after learning list comprehension. chap 5 of hutton's book. tail is faster tham removing the last element of the list, hence the reverse. this list starts at 1 and goes until num.
+-- previous way of doing it started at num and went until 1.
 ----------------------------------------
 
 
@@ -40,7 +42,8 @@ main = do
 
 
 
-let num=6
+let num=12
 print (aliquotsum num)
+print(aliquotsum' num)
 print(classify num)
 
