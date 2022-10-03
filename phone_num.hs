@@ -13,9 +13,11 @@ number xs
     | head ns == '0' || head ns == '1' || ns !! 3 == '0' ||  ns !! 3 == '1' = Nothing 
     | length ns == 10 = Just ns
     | otherwise = Nothing
-    where ns= filter (\x -> x `notElem` badchars) (map toLower xs)
-          badchars="abcdefghijklmnopqrstuvxywz" ++ ['(',')','-','.',',',' ','@',':','!','?','+',';','_','*']
-
+    where ns= filter (\x -> x `elem` goodchars) xs
+          goodchars="0123456789"
+--improvement of previous version.
+    --where ns= filter (\x -> x `notElem` badchars) (map toLower xs)
+          --badchars="abcdefghijklmnopqrstuvxywz" ++ ['(',')','-','.',',',' ','@',':','!','?','+',';','_','*']
 
 
 
@@ -31,6 +33,14 @@ main = do
 
 
 
+let num ="223 456   7890   " 
+let goodchars="123456789"
+let ns= filter (\x -> x `elem` goodchars) (map toLower num)
+let badchars="abcdefghijklmnopqrstuvxywz" ++ ['(',')','-','.',',',' ','@',':','!','?','+',';','_','*']
 
-let num = "1 (023) 456-7890"
+let ns2 = filter (\x -> x `notElem` badchars) (map toLower num)
+
+print(ns)
+print(ns2)
+
 print(number num)

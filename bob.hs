@@ -16,11 +16,11 @@ sentenceType sentence = if last sentence /= ' '
 
 allUpper :: String -> Bool
 allcharbutlowercase :: String
-allcharbutlowercase = map chr [0 .. 95] ++ map chr [123 .. 127]
---ascii codes for all characters but lower cases 96-122
+allcharbutlowercase = map chr [0 .. 96] ++ map chr [123 .. 127]
+--ascii codes for all characters but lower cases 97-122
 allcharbutuppercase :: String
 allcharbutuppercase = map chr [0 .. 64] ++ map chr [91 .. 127]
---ascii codes for all characters but lower cases 65-90
+--ascii codes for all characters but upper cases 65-90
 allUpper "" = False
 allUpper text = all (`elem` allcharbutlowercase ) (init text) && not (all (`elem` allcharbutuppercase ) (init text))
 --init to remove the pontuation mark.
