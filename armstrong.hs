@@ -3,7 +3,7 @@
 
 
 armstrong :: Integral a => a -> Bool
-armstrong num = foldr (((+)) . (^l)) 0 list == num
+armstrong num = foldr ((+) . (^l)) 0 list == num
     where list = digs num
           l = length list
 
