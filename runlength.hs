@@ -24,7 +24,7 @@ func ::[(Char, [Int])] -> Int -> (Char, Int)
 
 func [(a,x:xs)] n 
     | n == x = func [(a,xs)] (n+1)
-    | n < x = (a, n+1)
+    | n < x = (a, n)
     | otherwise = (a,0)
 
 
