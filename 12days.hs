@@ -25,6 +25,8 @@ sumup start
     | start >=2= list ++ tail  (sumup (start-1))
     | otherwise = []
     where list = unique start
+-- usar pattern matching para somar corretamente. a list so deve ter 2 fields. ou entao usar tuples!
+
 {-
 On the first day of Christmas my true love gave to me: a Partridge in a Pear Tree.
 
