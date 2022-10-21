@@ -19,16 +19,20 @@ test word2= [positions x word2 | x <- word2 ]
 test2 code = zip (rmdups code) (rmdups $ test code)
 --test2 code = [(x,y) | x <- (rmdups code), y <- (rmdups $ test code)]
 
-func ::[(Char, [Int])] -> Int -> (Char, Int)
+--func ::[(Char, [Int])] -> Int -> (Char, Int)
+
+fil [] n = n
+fil (x:xs) n
+    | x == n = fil xs (n+1)
+    | x>n = n
+    | otherwise = 0
 
 
-func [(a,x:xs)] n 
-    | n == x = func [(a,xs)] (n+1)
-    | n < x = (a, n)
-    | otherwise = (a,0)
+func :: [Char] -> [Char]
+func [] = []
+func code =head code: show (repeating) ++ func (drop repeating code)
+    where repeating = fil (positions (head code) code) 0
 
-
-    
 main :: IO ()
 main = do
 {- comentario multiline
@@ -36,14 +40,18 @@ main = do
 --comentario oneline
 -- compilar  ghc -o hw hw.hs
 --correr ./h`
--- ctrl + space run in VS
+-- ctrl + space run in VSa
 -- ctr + S to save in VS 
 
 
 
-
-let code = "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB"
+let code = "WWWWWWWWWWWWBBZZZW"
+let repeating = fil (positions 'W' code) 0
+print(rmdups code)
 print(positions 'W' code)
-print(rmdups $ test code)
-print(test2 code)
-print(func (test2 code) 0 )
+print(fil (positions 'W' code) 0)
+print(drop repeating code)
+print(func code)
+--print(rmdups $ test code)
+--print(test2 code)
+--print(func (test2 code) 0 )
