@@ -22,13 +22,13 @@ label :: Resistor -> String
 label resistor
     | kilo > 1 && mega < 1 = show (round kilo) ++ " kiloohms"
     | mega > 1 && giga < 1 = show (round mega) ++ " megaohms"
-    | giga > 1 && tera < 1 = show (round giga) ++ " gigaohms"
+    | giga > 1  = show (round giga) ++ " gigaohms"
     | otherwise = show (round ohm) ++ " ohms"
     where ohm = fromIntegral $ ohms resistor
           kilo =(/) ohm 1e3 
           mega = (/) ohm 1e6
           giga = (/) ohm 1e9
-          tera = (/) ohm 1e12
+
 
 ohms :: Resistor -> Int
 ohms resistor = (\(a,b,c) -> (10 * fromEnum a + fromEnum b) * 10^fromEnum c) $ bands resistor
