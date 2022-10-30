@@ -37,6 +37,6 @@ main = do
 
 
 
-let char = 'Z'
+let char = 'G'
 print (maker 'A' char)
 putStr(printdiamond $ diamond char)
