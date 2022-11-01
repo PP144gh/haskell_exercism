@@ -50,7 +50,7 @@ garden students plants =  zip dstudents plants
           dstudents = doublestring students2 ++ "null" :doublestring students2
 
 -- even if length of garden is not appropriate for a given list of students, it auto corrects the student list, that's what students2 does. 
--- note that if length of plant_list is 5, only one student chose flowers. if lenght of plant_list is 9, 2 students did. until length is 25 and all 12 did.
+-- note that if length of plant_list is 5, only one student chose flowers. if lenght of plant_list is 9, 2 students did. until length is 49 and all 12 did.
 
 -- dstudents transforms that corrected list in a list with a similar structure to plants list. This way a simple zip does the correct matching.
 --(student "null" will have '\n')
@@ -80,7 +80,7 @@ let plantList = "VRCGVVRVCGGCCGVRGCVCGCGV\nVRCCCGCRRGVCGCRVVCVGCGCV"
 let gardenx = garden defaultStudents plantList
 
 print(gardenx)
-
+print(length plantList)
 print(lookupPlants "Alice" gardenx)
 --print(lookupPlants "null" gardenx)
 --print(lookupPlants "Bob" gardenx)
