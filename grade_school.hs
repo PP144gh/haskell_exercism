@@ -10,7 +10,7 @@
 
 import Data.List
 
--- see School data as a tree with one branch, origin in empty. Each grade is a node that contains a list of names, each name is a leaf.
+-- see School data as a tree with one branch, origin in empty. Each grade is a node that contains a list of names. If grades are ordered, this is a search tree. see page 98 book. 
 
 data School = Empty | Node Int [String] School
 
@@ -25,12 +25,17 @@ add newGrade name (Node gr names next)
     | newGrade == gr = Node gr (insert name names) next
     | otherwise = Node gr names (add newGrade name next)
 
---recursion starts from the lowest grade, which is the first node.
+--lowest grade is the last node. Tree is built like empty -> highest grade -> .... lowest grade. example: Node lowest [] (Node (... (Node highest [] empty)))
+-- recursion on the tree starts in the outermost node (the lowest grade). hence newGrade < gr = Node newGrade [name] (Node gr names next), if newgrade is smaller than the outermost grade node, it will create another node in the end of the tree.
+--if newgrade already exists, it only adds to the list of names using insert function.
+-- if newgrade doesnt exist and is larger than current node grade, keep going in the innermost direction until current node grade is larger than new grade or you find empty and add node there.   
 
 -- The structure is already sorted, just print it
 sorted :: School -> [(Int, [String])]
 sorted Empty = []
 sorted (Node gr names next) = (gr, names) : sorted next
+
+--Tree is built like specified above such that the sorting is trivial, it will just print starting from the outermost/last node, which is the one with the lowest grade.
 
 grade :: Int -> School -> [String]
 grade _ Empty = []
